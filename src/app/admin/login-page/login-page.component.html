@@ -1,0 +1,46 @@
+<body class="text-center container">
+<form class="form-signin" [formGroup]="form" (ngSubmit)="signIn()">
+  <img class="mb-4" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Python.svg/1200px-Python.svg.png"
+        width="200" height="200">
+  <h1 class="h3 mb-3 font-weight-normal">Sign in to admin panel</h1>
+
+  <div class="alert alert-danger" *ngIf="authService.error$ | async as error">
+    {{error}}
+  </div>
+
+  <div class="alert alert-info" *ngIf="message">
+    {{message}}
+  </div>
+
+
+  <div [ngClass]="{invalid: form.get('email').touched && form.get('email').invalid}">
+  </div>
+  <label for="email" class="sr-only">Email address</label>
+  <input type="email" id="email" class="form-control"
+         placeholder="Email address" formControlName="email">
+  <div *ngIf="form.get('email').touched && form.get('email').invalid">
+    <small *ngIf="form.get('email').errors.required">email require</small>
+    <small *ngIf="form.get('email').errors.email">type correct email</small>
+  </div>
+
+  <div [ngClass]="{invalid: form.get('password').touched && form.get('password').invalid}">
+  </div>
+  <label for="inputPassword" class="sr-only">Password</label>
+  <input type="password" id="inputPassword" class="form-control"
+         placeholder="Password" formControlName="password">
+  <div *ngIf="form.get('password').touched && form.get('password').invalid">
+    <small *ngIf="form.get('password').errors.required">password require</small>
+    <small *ngIf="form.get('password').errors.minlength">
+       password must be at least 8 symbols. Now is {{form.get('password').errors.minlength.actualLength}} symbols
+    </small>
+  </div>
+
+  <button
+    class="btn btn-lg btn-primary btn-block"
+    type="submit"
+    [disabled]="form.invalid || submitted"
+    >Sign in</button>
+</form>
+
+
+</body>
